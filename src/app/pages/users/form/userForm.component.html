@@ -1,0 +1,108 @@
+<mat-card class="bg-light">
+    <mat-card-header>
+      <mat-card-title>
+        <strong>
+          {{titulo}}
+        </strong>
+      </mat-card-title>
+      <mat-icon matSuffix>perm_identity</mat-icon>
+    </mat-card-header>
+<mat-card-content class="bg-light">
+  <mat-card-subtitle>
+    <span class="my-1">
+      Los campos con (*) son requeridos.
+    </span>
+    <!-- <mat-card *ngIf="errores?.length>0">
+      <mat-card-content>
+        <ul class="alert alert-danger"  >
+          <li  *ngFor="let err of errores" >
+            {{err}}
+          </li>
+        </ul>
+      </mat-card-content>
+    </mat-card> -->
+  </mat-card-subtitle>
+  <form [formGroup]="formularioCreado" >
+    <div class="row">
+      <!-- Columna izquierda -->
+      <div class="col-sm-6">
+       
+        
+        <div class="form-group row">
+          <div class="col-sm-8">
+            <mat-form-field appearance="fill" style="width: 100%;">
+              <mat-label for="nombre">
+                Nombre
+              </mat-label>
+              <input style="text-transform: uppercase;"
+                  matInput required
+                  formControlName="nombre"
+                  placeholder="Ej: juan pepito ">
+              <mat-icon matSuffix>create</mat-icon>
+            </mat-form-field>
+            <mat-error *ngIf="formularioCreado.controls['nombre'].invalid &&
+                                (formularioCreado.controls['nombre'].dirty
+                                || formularioCreado.controls['nombre'].touched )">
+                        <mat-error *ngIf="formularioCreado.controls['nombre'].errors?.required"
+                               role="alert">
+                          Nombre es requerido
+                        </mat-error>
+                        <mat-error *ngIf="formularioCreado.controls['nombre'].errors?.minlength"
+                               role="alert" >
+                             *Minimo 3 caracteres*
+                        </mat-error>
+                        <mat-error *ngIf="formularioCreado.controls['nombre'].errors?.maxlength"
+                               role="alert" >
+                             *Maximo 20 caracteres*
+                        </mat-error>
+            </mat-error>
+          </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-8">
+                <mat-label>Seleccione estado</mat-label>
+                <select  formControlName="estado" >
+                    <option *ngFor="let est of estadoSelect"
+                    name="roles"
+                    style="width: 300px;"
+                    [value]="est">{{est}}</option>
+                  
+                </select>
+            </div>
+          </div>
+       
+      </div>
+       <!-- Columna izquierda -->
+       <div class="col-sm-6">
+
+       </div>
+     
+    </div>
+    <mat-card-footer class="bg-light ml-4">
+      <!-- <button class="btn btn-rounded btn-primary btn-xs my-3  "
+                role="button"
+                (click)="create()"
+                [disabled]="!formularioCreado.valid"
+                *ngIf="!user.id else elseBlock">
+          Crear
+        </button> -->
+      <button class="btn btn-rounded btn-primary btn-xs my-3  "
+                role="button"
+                (click)="create()"
+                [disabled]="!formularioCreado.valid"
+               >
+          Crear
+        </button>
+        <!-- <ng-template #elseBlock>
+            <button class="btn btn-rounded btn-success btn-xs my-3 "
+                role="button"
+                [disabled]="!formularioCreado.valid"
+                (click)="update()">
+          Actualizar
+        </button>
+        </ng-template> -->
+    </mat-card-footer>
+  </form>
+  </mat-card-content>
+</mat-card>

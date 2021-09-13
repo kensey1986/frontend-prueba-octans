@@ -13,9 +13,23 @@
         </mat-card>
         <mat-card>
             <mat-list role="list">
-                <mat-list-item role="listitem">{{user?.id}}</mat-list-item>
-                <mat-list-item role="listitem">{{user?.nombre}}</mat-list-item>
-                <mat-list-item role="listitem">{{user?.estado}}</mat-list-item>
+                <mat-list-item role="listitem"><button
+                    mat-raised-button
+                    class="btn btn-rounded btn-outline-dark btn-sm"
+                    type="button"
+                    [routerLink]="['/users/form', user?.id]"
+                  >
+                    Editar
+                  </button></mat-list-item>
+                <mat-list-item role="listitem"></mat-list-item>
+                <mat-list-item role="listitem"><button
+                    mat-raised-button
+                    class="btn btn-rounded btn-outline-dark btn-sm"
+                    type="button"
+                    [routerLink]="['/users/form', user?.id]"
+                  >
+                    Eliminar
+                  </button></mat-list-item>
                 <mat-list-item role="listitem"></mat-list-item>
               </mat-list>
         </mat-card>
