@@ -1,0 +1,28 @@
+
+
+<mat-grid-list cols="2" rowHeight="2:1">
+    <mat-grid-tile>
+        <mat-card>
+            <mat-list role="list">
+                <mat-list-item role="listitem">ID: {{user?.id}}</mat-list-item>
+                <mat-list-item role="listitem">Nombre: {{user?.nombre}}</mat-list-item>
+                <mat-list-item role="listitem">Rol: {{user?.rol?.nombre}}</mat-list-item>
+                <mat-list-item role="listitem">Estado: {{user?.estado}}</mat-list-item>
+                <mat-list-item role="listitem">Creado: {{user?.createAt}}</mat-list-item>
+              </mat-list>
+        </mat-card>
+        <mat-card>
+            <mat-list role="list">
+                <mat-list-item role="listitem">{{user?.id}}</mat-list-item>
+                <mat-list-item role="listitem">{{user?.nombre}}</mat-list-item>
+                <mat-list-item role="listitem">{{user?.estado}}</mat-list-item>
+                <mat-list-item role="listitem"></mat-list-item>
+              </mat-list>
+        </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile>
+        
+    </mat-grid-tile>
+    <mat-grid-tile></mat-grid-tile>
+    <mat-grid-tile></mat-grid-tile>
+  </mat-grid-list>
