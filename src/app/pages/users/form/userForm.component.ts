@@ -1,17 +1,14 @@
+import { map } from 'rxjs/operators';
+import { Rol } from './../interface/rol';
 import { UserService } from './../service/user.service';
 import { User } from './../interface/user';
 import Swal from 'sweetalert2';
-
-// import { Sucursal } from ';
 import { Component, OnInit, ɵReflectionCapabilities } from '@angular/core';
-// import { Region } from '../../regiones/interfaces/region';
-// import { RegionService } from '../../regiones/services/region.service';
+
 import { Router, ActivatedRoute } from '@angular/router';
 
-// import { LoadingService } from '../../generales/services/loading.service';
 import {  Validators,
   FormBuilder, FormGroup} from '@angular/forms';
-  import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-form-user',
@@ -19,7 +16,7 @@ import {  Validators,
 })
 export class UserFormComponent implements OnInit {
 
-  disableSelect = new FormControl(false);
+  
   hide = true;
   minDate = new Date(1930, 1, 1);
   maxDate = new Date();
@@ -28,7 +25,7 @@ export class UserFormComponent implements OnInit {
 //   regiones: Region[];
   titulo = 'Crear Usuarios';
   errores?: string[];
-  roles?: string [];
+  roles?: Rol [] ;
   rolDisplay?: string;
   rolSelect?: string[];
   estadoDisplay = 'DESACTIVADO';
@@ -49,7 +46,18 @@ export class UserFormComponent implements OnInit {
     this.rolSelect = ['ADMINISTRADOR', 'USUARIO'];
     this.estadoSelect =  ['ACTIVO', 'DESACTIVADO'];
     // this.regionService.getRegionLista().subscribe(regiones => this.regiones = regiones);
+    this.userService.getListadoRoles().subscribe(rol => this.roles = rol)
   }
+
+  formularioCreado: FormGroup = this.formBuilder.group({
+    nombre: ['pepe', Validators.compose([
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(20)
+    ])],
+    roles: ['', Validators.required],
+    estado: ['', Validators.required],
+  });
 
   cargarUser() {
     this.activatedRoute.params.subscribe(
@@ -132,15 +140,7 @@ export class UserFormComponent implements OnInit {
   // tratamiento a formulario
 
   
-  formularioCreado: FormGroup = this.formBuilder.group({
-    nombre: ['pepe', Validators.compose([
-      Validators.required,
-      Validators.minLength(3),
-      Validators.maxLength(20)
-    ])],
-    // rol: ['', Validators.required],
-    estado: ['algo', Validators.required],
-  });
+ 
   
   asignarDatosFormulario() {
     console.log('====================================');
@@ -155,12 +155,28 @@ export class UserFormComponent implements OnInit {
 
   asignarDatosParaGuardar() {
     this.user.nombre = this.formularioCreado?.value.nombre,
-    this.user.estado = this.formularioCreado?.value.estado
+    this.user.estado = this.formularioCreado?.value.estado;
+    const idRol = +this.formularioCreado?.value.roles;
+    console.log(this.formularioCreado?.value.roles)
+    console.log('mostrara lo que tienen guardado roles')
+    console.log(this.roles)
+    const rolFilter = this.roles?.filter(rol => rol.id === idRol);
+    
+    
     if (this.formularioCreado?.value.estado === 'ACTIVO') {
       this.user.estado = true;
     } else {
       this.user.estado = false;
     }
+  }
+  public compararRol(o1: Rol, o2: Rol): boolean {
+    console.log('====================================');
+    console.log('entro a comprar');
+    console.log('====================================');
+    if (o1 === undefined && o2 === undefined) {
+      return true;
+    }
+    return o1 === null || o2 === null || o1 === undefined || o2 === undefined ? false : o1.id === o2.id;
   }
 
 }
