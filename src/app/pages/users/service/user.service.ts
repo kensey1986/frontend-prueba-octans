@@ -1,4 +1,5 @@
 import { User } from './../interface/user';
+import { Rol } from './../interface/rol';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest, HttpEvent } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
@@ -17,6 +18,24 @@ export class UserService {
     public  http : HttpClient,
     public  router: Router,
   ) { }
+
+  /**
+   * 
+   * @returns un listado de Roles desde la db
+   */
+  getListadoRoles(): Observable<Rol[]> {
+    console.log('====================================');
+    console.log('llego a llamar los roles');
+    console.log('====================================');
+    return this.http.get<Rol[]>( 'http://localhost:8080/api/roles').pipe(
+      catchError (e => {
+        if (e.status !== 401 && e.error.mensaje) {
+          console.error(e.error.mensaje);
+        }
+        return throwError(e);
+      })
+    );
+  }
 
   getListadoUsuarios(): Observable<User[]> {
     return this.http.get<User[]>( `${this.urlEndPoint}`).pipe(
@@ -61,20 +80,8 @@ export class UserService {
      );
    }
 
-  delete(id: any): Observable<User> {
-    console.log('llego al servicio');
-    console.log('====================================');
-    console.log(`${this.urlEndPoint}/${id}`);
-    console.log('====================================');
+  delete(id: any): Observable<any> {
     return this.http.delete(
-      `${this.urlEndPoint}/${id}`).pipe(
-        map((response: any ) => response.user as User ),
-        catchError (e => {
-          if (e.error.mensaje) {
-            console.error(e.error.mensaje);
-          }
-          return throwError(e);
-        })
-      );
+      `${this.urlEndPoint}/${id}`)
   }
 }

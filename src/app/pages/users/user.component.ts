@@ -6,6 +6,8 @@ import { MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {RouterModule} from '@angular/router';
+import Swal from 'sweetalert2';
+
 
 
 @Component({
@@ -48,11 +50,15 @@ export class UserComponent implements OnInit {
   }
 
   eliminarUsuario(id: number) {
-    console.log('====================================');
-    console.log(' trae id');
-    console.log(id)
-    console.log('====================================');
-    const resp=this.userService.delete(id)
-    console.log(resp)
+    this.userService.delete(id)
+    .subscribe(response => {
+      Swal.fire(`Borrado`, response.mensaje, 'success')
+      this.cargarListadoUsuariosCompleto();
+    },
+    err => {
+      Swal.fire(`Error`, err, 'error')
+      console.error(err);
+    });
+    this.cargarListadoUsuariosCompleto();
   }
 }
