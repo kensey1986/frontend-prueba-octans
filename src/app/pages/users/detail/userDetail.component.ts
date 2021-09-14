@@ -1,8 +1,9 @@
 import { UserService } from './../service/user.service';
 import { OnInit, Component, Input  } from '@angular/core';
 import { User } from '../interface/user';
-import {RouterModule} from '@angular/router';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import Swal from 'sweetalert2';
+
 
 
 
@@ -21,6 +22,7 @@ import { ActivatedRoute } from '@angular/router';
     constructor(
         public  userService: UserService,
         public  activatedRoute: ActivatedRoute,
+        public  router: Router,
       ){}
 
       cargarUsuario() {
@@ -28,11 +30,19 @@ import { ActivatedRoute } from '@angular/router';
           const id = params.get('id');
           this.userService.getUser(id)
           .subscribe(
-            user => {this.user = user,
-                       console.log('============usuario========================');
-                       console.log(this.user);
-                       console.log('====================================');
-            });
+            user => this.user = user);
         });
+      }
+      eliminarUsuario(id: number | undefined) {
+        this.userService.delete(id)
+        .subscribe(response => {
+          Swal.fire(`Borrado`, response.mensaje, 'success');
+          this.router.navigate(['/users'])
+        },
+        err => {
+          Swal.fire(`Error`, err, 'error')
+          console.error(err);
+        });
+       
       }
   }

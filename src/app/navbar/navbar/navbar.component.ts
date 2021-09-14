@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-navbar',
-  template: `<mat-toolbar color="primary">
-                <span>Octans</span>
-              </mat-toolbar>`,
+  templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent  {}

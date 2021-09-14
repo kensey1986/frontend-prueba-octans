@@ -6,9 +6,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
 const routes: Routes = [
+    {path: '', component: UserComponent},
     {path: 'users', component: UserComponent},
     {path: 'users/detail/:id', component: UserDetailComponent},
     {path: 'users/form', component: UserFormComponent},
+    {path: 'users/form/:id', component: UserFormComponent},
     {path: 'users/detail/:id', component: UserDetailComponent},
     {path: '**', redirectTo: '', pathMatch: 'full'},
 ];

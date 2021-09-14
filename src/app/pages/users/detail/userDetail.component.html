@@ -19,16 +19,16 @@
                     type="button"
                     [routerLink]="['/users/form', user?.id]"
                   >
-                    Editar
+                    Editar <mat-icon>edit</mat-icon>
                   </button></mat-list-item>
                 <mat-list-item role="listitem"></mat-list-item>
                 <mat-list-item role="listitem"><button
                     mat-raised-button
                     class="btn btn-rounded btn-outline-dark btn-sm"
                     type="button"
-                    [routerLink]="['/users/form', user?.id]"
+                    (click)="eliminarUsuario(user?.id)"
                   >
-                    Eliminar
+                    Eliminar <mat-icon>delete</mat-icon>
                   </button></mat-list-item>
                 <mat-list-item role="listitem"></mat-list-item>
               </mat-list>

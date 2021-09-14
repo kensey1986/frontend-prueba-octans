@@ -7,6 +7,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {RouterModule} from '@angular/router';
 import Swal from 'sweetalert2';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 
 
@@ -17,7 +18,8 @@ import Swal from 'sweetalert2';
   
 })
 export class UserComponent implements OnInit {
-
+  public formGroup: FormGroup | undefined;
+  
   
   @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort!: MatSort;
@@ -25,27 +27,27 @@ export class UserComponent implements OnInit {
   dataSource = new MatTableDataSource();
   activar = true;
 
-  // users: User[];
-  // paginador: any;
-  // userSelecionado: User;
-  // tipoUsuario: string;
-  // link = '/users/page';
+  user: User = new User();
   titulo: string =' lista de Usuarios';
   constructor(
     public  userService: UserService,
+    
   ){}
   ngOnInit(): void {
     this.cargarListadoUsuariosCompleto();
+    
    
     
     throw new Error('Method not implemented.');
   }
+
+  
+  
   cargarListadoUsuariosCompleto() {
     this.userService.getListadoUsuarios()
-    .subscribe(datosTabla => {this.dataSource.data = datosTabla; console.log(datosTabla);
+    .subscribe(datosTabla => {this.dataSource.data = datosTabla; 
                               if (datosTabla.length > 0 ) {
                                 this.activar = false;
-                                // this.loadingService.cerrarModal();
                             }});
   }
 
@@ -60,5 +62,19 @@ export class UserComponent implements OnInit {
       console.error(err);
     });
     this.cargarListadoUsuariosCompleto();
+  }
+
+  
+  buscar(nombre: any) {
+    this.userService.filtrarUsuario(nombre)
+    .subscribe( response => {
+      if (response.length>0) {
+         this.dataSource.data = response
+        
+      } else {
+        Swal.fire(`${nombre}`, `. No Encontrado en la base de datos `, 'info')
+        
+      }
+    }      );
   }
 }

@@ -59,7 +59,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <div class="col-sm-8">
+          <div class="col-sm-8" *ngIf="!user.id">
               <mat-label>Seleccione Rol Usuario</mat-label>
               <select  
               [compareWith]="compararRol"
@@ -74,6 +74,22 @@
               </select>
              
           </div>
+            <div class="col-sm-8" *ngIf="user.id">
+              <mat-label>Seleccione Rol Usuario</mat-label>
+              <select  formControlName="roles" >
+                <option
+                [value]="rolDisplay"
+                selected
+                >
+                  {{rolDisplay}}
+                </option>
+                  <option *ngFor="let est of rolSelect"
+                  name="roles"
+                  style="width: 300px;"
+                  [value]="est">{{est}}</option>
+              </select>
+          </div>
+
         </div>
 
         <div class="form-group row">
@@ -81,7 +97,7 @@
                 <mat-label>Seleccione estado</mat-label>
                 <select  formControlName="estado" >
                     <option *ngFor="let est of estadoSelect"
-                    name="roles"
+                    name="estado"
                     style="width: 300px;"
                     [value]="est">{{est}}</option>
                   
@@ -107,18 +123,17 @@
       <button class="btn btn-rounded btn-primary btn-xs my-3  "
                 role="button"
                 (click)="create()"
-                [disabled]="!formularioCreado.valid"
-               >
+                *ngIf="!user.id else elseBlock">
           Crear
         </button>
-        <!-- <ng-template #elseBlock>
+         <ng-template #elseBlock>
             <button class="btn btn-rounded btn-success btn-xs my-3 "
                 role="button"
                 [disabled]="!formularioCreado.valid"
                 (click)="update()">
           Actualizar
         </button>
-        </ng-template> -->
+        </ng-template>
     </mat-card-footer>
   </form>
   </mat-card-content>

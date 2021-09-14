@@ -4,12 +4,13 @@
         <mat-card-title>
           <h3>
             <strong class="text-white">{{ titulo }}</strong>
+            <mat-icon>groups</mat-icon>
           </h3>
         </mat-card-title>
         <mat-card-subtitle>
           <h4>
             <strong class="text-white-50"> 
-              Listado de Usuarios <mat-icon>groups</mat-icon>
+              Usuarios 
             </strong>
           </h4>
         </mat-card-subtitle>
@@ -17,40 +18,58 @@
     </mat-card-header>
     <mat-card-content>
       <mat-card-actions class="text-white ml-2 my-3">
-        <button
-          mat-raised-button
-          class="btn bg-light btn-rounded btn-outline-dark btn-xs"
-          type="button"
-          [routerLink]="['/users/form']"
-        >
-          Crear Usuario
-          <mat-icon>person_add_alt_1</mat-icon>
-        </button>
-        <!-- <button
-          [disabled]="[activar]"
-          mat-raised-button
-          class="btn bg-light btn-rounded btn-outline-dark btn-xs mx-3"
-          type="button"
-          (click)="abrirModal()"
-        >
-          Buscar Cliente
-        </button> -->
+        <div class="row">
+          <div class="col-3">
+            <button
+            mat-raised-button
+            class="btn bg-light btn-rounded btn-outline-dark btn-xs"
+            type="button"
+            [routerLink]="['/users/form']"
+          >
+            Crear Usuario
+            <mat-icon>person_add_alt_1</mat-icon>
+          </button>
+          </div>
+          <div class="col-9">
+            <form #regionForm="ngForm" >
+              <div class="form-group row">
+               <label for="nombre" class="col-form-label col-sm-1 ">Buscar </label>
+               <div class="col-sm-4">
+                 <input type="text" class="form-control "
+                         [(ngModel)]="user.nombre"
+                         style="text-transform:uppercase;"
+                         placeholder="Ingrese  nombre"
+                         id="user.nombre"
+                         name="user.nombre"
+                         minlength="3"
+                         maxlength="20"
+                         #user.nombre="ngModel"
+                         ng-model="user.nombre"
+                         requiered>
+               </div>
+              
+                <div class="col-sm-4">
+                 <button class="btn btn-primary"
+                 role="button"
+                 (click)="buscar(user.nombre)" >
+                   Buscar
+                 </button>
+              </div>
+              <div class="col-sm-3">
+                <button class="btn btn-light"
+                role="button"
+                (click)="cargarListadoUsuariosCompleto()">
+                  Limbiar
+                </button>
+               </div>
+             
+             </div>
+             
+           </form>
+          </div>
+        </div>
+        
       </mat-card-actions>
-      <!-- <mat-form-field
-        *ngIf="!activar"
-        style="font-size: 14px; width: 100%"
-        class="bg-light mb-2 p-2"
-      >
-        <mat-label class="ml-2">Filtro</mat-label>
-        <input
-          autocomplete="off"
-          matInput
-          (keyup)="applyFilter($event)"
-          placeholder="Ej. ium"
-          #input
-        />
-      </mat-form-field> -->
-  
       <table
         matSort
         style="width: 100%"
@@ -123,9 +142,7 @@
             </span>
           </td>
         </ng-container>
-       
-        
-          
+
         <!-- Name Column -->
         <ng-container matColumnDef="editar">
           <th style="text-align: center" mat-header-cell *matHeaderCellDef>
@@ -138,7 +155,7 @@
               type="button"
               [routerLink]="['/users/form', element.id]"
             >
-              Editar
+            <mat-icon>edit</mat-icon>
             </button>
           </td>
         </ng-container>
@@ -155,7 +172,7 @@
             type="button"
             (click)="eliminarUsuario(element.id)"
           >
-            Eliminar
+          <mat-icon>delete</mat-icon>
           </button>
         </td>
       </ng-container>
@@ -170,15 +187,10 @@
           </td>
         </tr>
       </table>
-      <!-- <mat-paginator
-        *ngIf="!activar"
-        [pageSizeOptions]="[5, 10, 20, 30]"
-        showFirstLastButtons
-      ></mat-paginator> -->
+      
       <div class="alert alert-info" *ngIf="activar">
           <strong>No hay registros en la Base de Datos</strong>
-        <!-- <mat-label>
-        </mat-label> -->
+       
       </div>
     </mat-card-content>
   </mat-card>

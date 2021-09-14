@@ -1,6 +1,6 @@
 import { UserFormComponent } from './pages/users/form/userForm.component';
 import { UserDetailComponent } from './pages/users/detail/userDetail.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormGroup } from '@angular/forms';
 import { UserComponent } from './pages/users/user.component';
 import { AppRoutingModule } from './app.routing.module';
 import {RouterModule} from '@angular/router';
@@ -16,6 +16,7 @@ import { MatTableModule } from '@angular/material/table'
 import {MatListModule} from '@angular/material/list';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatSelectModule} from '@angular/material/select';
+
 
 
 import { AppComponent } from './app.component';
@@ -47,7 +48,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
-    MatInputModule
+    MatInputModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
